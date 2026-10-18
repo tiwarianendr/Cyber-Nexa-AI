@@ -31,4 +31,4 @@ It helps users analyze suspicious URLs, review potentially fraudulent emails, an
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+ https://github.com/tiwarianendr/Cyber-Nexa-AI.git
