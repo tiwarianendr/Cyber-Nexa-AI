@@ -1,0 +1,34 @@
+# 🛡️ Cyber Nexa AI
+
+### AI-Based Cybersecurity Platform
+
+Cyber Nexa AI is a cybersecurity project developed using Python, Flask, HTML, CSS, JavaScript, and SQLite.
+
+It helps users analyze suspicious URLs, review potentially fraudulent emails, and view security detection records.
+
+## 🚀 Features
+
+- 🔐 User Registration and Login
+- 🌐 URL Risk Analysis
+- 📧 Phishing Email Detection
+- 📊 Security Dashboard
+- 📜 Detection History
+- 📈 Security Statistics
+- 🛡️ Threat Intelligence Integration
+
+## 🛠️ Technologies Used
+
+- Python
+- Flask
+- SQLite
+- HTML
+- CSS
+- JavaScript
+- Git and GitHub
+
+## ⚙️ Run Locally
+
+### 1. Clone the repository
+
+```bash
+git clone YOUR_REPOSITORY_URL
