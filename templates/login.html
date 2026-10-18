@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Cyber Nexa AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="auth-page">
+
+    <header class="navbar">
+        <a href="/" class="logo">
+            <span class="logo-icon">⬡</span>
+            CYBER NEXA <span class="logo-highlight">AI</span>
+        </a>
+
+        <a href="/" class="auth-back">← Back to Home</a>
+    </header>
+
+    <main class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="auth-symbol">⬡</div>
+
+            <h1>Welcome Back</h1>
+
+            <p class="auth-subtitle">
+                Login to access your cybersecurity dashboard.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="email"
+                    required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password"
+                    autocomplete="current-password" required>
+
+                <button type="submit" class="btn auth-submit">
+                    Login to Dashboard →
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="{{ url_for('signup') }}">Create Account</a>
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

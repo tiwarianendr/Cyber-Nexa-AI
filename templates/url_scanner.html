@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>URL Scanner | Cyber Nexa AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+    <main class="scanner-page">
+
+        <a href="{{ url_for('dashboard') }}" class="scanner-back">
+            ← Back to Dashboard
+        </a>
+
+        <div class="scanner-heading">
+            <div class="scanner-icon">⌕</div>
+
+            <h1>URL Threat Scanner</h1>
+
+            <p>
+                Analyze website addresses for suspicious URL patterns.
+            </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <section class="dashboard-panel scanner-form-panel">
+
+            <form method="POST" action="{{ url_for('url_scanner') }}">
+
+                <label for="url">Enter Website URL</label>
+
+                <input type="url" id="url" name="url" maxlength="2048" placeholder="https://example.com"
+                    value="{{ scanned_url }}" required>
+
+                <button type="submit" class="btn scanner-submit">
+                    Analyze URL →
+                </button>
+
+            </form>
+
+            <p class="input-help">
+                Preliminary rule-based analysis only. No external website
+                is contacted by this scanner.
+            </p>
+
+        </section>
+
+        {% if result %}
+
+        <section class="dashboard-panel scanner-result">
+
+            <span class="eyebrow">ANALYSIS RESULT</span>
+
+            <h2>{{ result.prediction }}</h2>
+
+            <div class="risk-score">
+                <span>Risk Score</span>
+                <strong>{{ result.risk_score }}/100</strong>
+            </div>
+
+            <div class="risk-track">
+                <div class="risk-fill" style="width: {{ result.risk_score }}%;">
+                </div>
+            </div>
+
+            <h3>Analysis Findings</h3>
+
+            <ul class="reason-list">
+                {% for reason in result.reasons %}
+                <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+
+            <p class="result-disclaimer">
+                This score is a heuristic estimate, not a verified verdict.
+                A low score does not guarantee that a website is safe.
+            </p>
+
+        </section>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

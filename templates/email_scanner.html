@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Scanner | Cyber Nexa AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+    <main class="scanner-page">
+
+        <a href="{{ url_for('dashboard') }}" class="scanner-back">
+            ← Back to Dashboard
+        </a>
+
+        <div class="scanner-heading">
+            <div class="scanner-icon">✉</div>
+            <h1>Email Threat Scanner</h1>
+            <p>Check email messages for suspicious and phishing patterns.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <section class="dashboard-panel scanner-form-panel">
+            <form method="POST" action="{{ url_for('email_scanner') }}">
+
+                <label for="subject">Email Subject (Optional)</label>
+                <input type="text" id="subject" name="subject" maxlength="250"
+                    placeholder="Your account needs verification" value="{{ subject }}">
+
+                <label for="email_text" style="margin-top: 20px;">
+                    Email Message
+                </label>
+
+                <textarea id="email_text" name="email_text" rows="8" maxlength="10000"
+                    placeholder="Paste the email message here..." required style="width:100%; padding:15px; margin-top:10px;
+                    border:1px solid #334155; border-radius:8px;
+                    background:#080d18; color:white; resize:vertical;">{{ email_text }}</textarea>
+
+                <button type="submit" class="btn scanner-submit">
+                    Analyze Email →
+                </button>
+
+            </form>
+
+            <p class="input-help">
+                Use sample messages or messages you are authorized to inspect.
+                Do not paste real passwords, OTPs, or private financial information.
+            </p>
+        </section>
+
+        {% if result %}
+        <section class="dashboard-panel scanner-result">
+
+            <span class="eyebrow">ANALYSIS RESULT</span>
+
+            <h2>{{ result.prediction }}</h2>
+
+            <div class="risk-score">
+                <span>Risk Score</span>
+                <strong>{{ result.risk_score }}/100</strong>
+            </div>
+
+            <div class="risk-track">
+                <div class="risk-fill" style="width: {{ result.risk_score }}%;"></div>
+            </div>
+
+            <h3>Analysis Findings</h3>
+
+            <ul class="reason-list">
+                {% for reason in result.reasons %}
+                <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+
+            <p class="result-disclaimer">
+                This is a preliminary rule-based estimate, not a verified
+                verdict. A low score does not guarantee that an email is safe.
+            </p>
+
+        </section>
+        {% endif %}
+
+    </main>
+</body>
+
+</html>

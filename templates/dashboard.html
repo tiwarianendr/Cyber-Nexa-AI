@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Security Dashboard | Cyber Nexa AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="/" class="logo dashboard-logo">
+                <span class="logo-icon">⬡</span>
+                CYBER <span class="logo-highlight">NEXA</span>
+            </a>
+
+            <div class="sidebar-label">MAIN MENU</div>
+
+            <nav class="sidebar-nav">
+
+                <a href="{{ url_for('dashboard') }}" class="side-link active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('url_scanner') }}" class="side-link">
+                    <span>⌕</span> URL Scanner
+                </a>
+
+                <a href="{{ url_for('email_scanner') }}" class="side-link">
+                    <span>✉</span> Email Scanner
+                </a>
+
+                <a href="{{ url_for('history') }}" class="side-link">
+                    <span>◷</span> Detection History
+                </a>
+
+                <a href="{{ url_for('statistics') }}" class="side-link">
+                    <span>▥</span> Statistics
+                </a>
+
+            </nav>
+
+            <!-- ACCOUNT -->
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-label">ACCOUNT</div>
+
+                <a href="{{ url_for('logout') }}" class="side-link logout-link">
+                    <span>↪</span> Logout
+                </a>
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar">
+                        {{ username[0]|upper if username else 'U' }}
+                    </div>
+
+                    <div>
+                        <strong>{{ username }}</strong>
+                        <small>Registered User</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- HEADER -->
+            <header class="dashboard-header">
+
+                <div>
+                    <h1>Security Dashboard</h1>
+
+                    <p>
+                        Welcome back, {{ username }}!
+                        Here's your security overview.
+                    </p>
+                </div>
+
+                <div class="header-right">
+
+                    <span class="system-status">
+                        <span class="status-dot"></span>
+                        SYSTEM ONLINE
+                    </span>
+
+                    <div class="header-avatar">
+                        {{ username[0]|upper if username else 'U' }}
+                    </div>
+
+                </div>
+
+            </header>
+
+            <!-- DEVELOPMENT NOTICE -->
+            <div class="demo-notice">
+                <strong>RULE-BASED MONITORING</strong>
+                Dashboard statistics are based on saved scan records.
+                URL and email analysis use rule-based checks.
+            </div>
+
+            <!-- STATISTICS CARDS -->
+            <section class="stats-grid">
+
+                <!-- URL SCANS -->
+                <article class="stat-card">
+
+                    <div class="stat-top">
+                        <span>Total URL Scans</span>
+                        <span class="stat-icon cyan">⌕</span>
+                    </div>
+
+                    <h2>{{ url_total }}</h2>
+
+                    <p>Recorded URL analyses</p>
+
+                </article>
+
+                <!-- EMAIL SCANS -->
+                <article class="stat-card">
+
+                    <div class="stat-top">
+                        <span>Email Analyses</span>
+                        <span class="stat-icon purple">✉</span>
+                    </div>
+
+                    <h2>{{ email_total }}</h2>
+
+                    <p>Recorded email analyses</p>
+
+                </article>
+
+                <!-- THREATS -->
+                <article class="stat-card">
+
+                    <div class="stat-top">
+                        <span>Potential Threats</span>
+                        <span class="stat-icon red">⚠</span>
+                    </div>
+
+                    <h2>{{ threats_total }}</h2>
+
+                    <p>Suspicious or high-risk results</p>
+
+                </article>
+
+                <!-- SECURITY SCORE -->
+                <article class="stat-card">
+
+                    <div class="stat-top">
+                        <span>Security Score</span>
+                        <span class="stat-icon green">⬡</span>
+                    </div>
+
+                    {% if security_score is defined and security_score is not none %}
+
+                    <h2>{{ security_score }}/100</h2>
+
+                    <p>Based on recorded scan results</p>
+
+                    {% else %}
+
+                    <h2>--</h2>
+
+                    <p>Scan data not available</p>
+
+                    {% endif %}
+
+                </article>
+
+            </section>
+
+            <!-- MAIN GRID -->
+            <section class="dashboard-content-grid">
+
+                <!-- QUICK URL SCAN -->
+                <div class="dashboard-panel quick-scan-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Quick URL Scan</h2>
+
+                            <p>
+                                Analyze a website address for suspicious patterns.
+                            </p>
+                        </div>
+
+                        <span class="panel-symbol">⌕</span>
+
+                    </div>
+
+                    <form id="quickScanForm" method="POST" action="{{ url_for('url_scanner') }}">
+
+                        <label for="quickUrl">Website URL</label>
+
+                        <div class="scan-input-group">
+
+                            <input type="url" id="quickUrl" name="url" placeholder="https://example.com"
+                                autocomplete="url" maxlength="2048" required>
+
+                            <button type="submit" class="btn scan-button">
+                                Analyze →
+                            </button>
+
+                        </div>
+
+                        <p class="input-help">
+                            Only analyze URLs you are authorized to inspect.
+                        </p>
+
+                    </form>
+
+                    <!-- QUICK ACTIONS -->
+                    <div class="quick-actions">
+
+                        <a href="{{ url_for('url_scanner') }}" class="quick-action">
+
+                            <span>⌕</span>
+
+                            <div>
+                                <strong>URL Scanner</strong>
+                                <small>Inspect website addresses</small>
+                            </div>
+
+                            <span class="action-arrow">→</span>
+
+                        </a>
+
+                        <a href="{{ url_for('email_scanner') }}" class="quick-action">
+
+                            <span>✉</span>
+
+                            <div>
+                                <strong>Email Scanner</strong>
+                                <small>Inspect suspicious email text</small>
+                            </div>
+
+                            <span class="action-arrow">→</span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- SECURITY OVERVIEW -->
+                <div class="dashboard-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Security Overview</h2>
+                            <p>Current application status</p>
+                        </div>
+
+                    </div>
+
+                    <div class="security-overview">
+
+                        <div class="overview-item">
+
+                            <span class="overview-indicator green-indicator"></span>
+
+                            <div>
+                                <strong>Account System</strong>
+                                <small>Login protection enabled</small>
+                            </div>
+
+                            <span class="overview-badge">ACTIVE</span>
+
+                        </div>
+
+                        <div class="overview-item">
+
+                            <span class="overview-indicator green-indicator"></span>
+
+                            <div>
+                                <strong>URL Analysis</strong>
+                                <small>Rule-based scanner available</small>
+                            </div>
+
+                            <span class="overview-badge">ACTIVE</span>
+
+                        </div>
+
+                        <div class="overview-item">
+
+                            <span class="overview-indicator green-indicator"></span>
+
+                            <div>
+                                <strong>Email Analysis</strong>
+                                <small>Rule-based scanner available</small>
+                            </div>
+
+                            <span class="overview-badge">ACTIVE</span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SECURITY TIP -->
+                    <div class="security-tip">
+
+                        <span>ⓘ</span>
+
+                        <p>
+                            <strong>Security Tip</strong><br>
+                            Never enter passwords or OTPs on untrusted websites.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- RECENT ACTIVITY -->
+            <section class="dashboard-panel activity-panel">
+
+                <div class="panel-heading activity-heading">
+
+                    <div>
+                        <h2>Recent URL Activity</h2>
+                        <p>Your latest recorded URL analyses.</p>
+                    </div>
+
+                    <a href="{{ url_for('history') }}" class="view-all">
+                        View History →
+                    </a>
+
+                </div>
+
+                <div style="overflow-x: auto;">
+
+                    <table style="width: 100%; border-collapse: collapse;">
+
+                        <thead>
+                            <tr>
+
+                                <th style="text-align: left; padding: 12px;">
+                                    Website URL
+                                </th>
+
+                                <th style="text-align: left; padding: 12px;">
+                                    Prediction
+                                </th>
+
+                                <th style="text-align: left; padding: 12px;">
+                                    Risk Score
+                                </th>
+
+                                <th style="text-align: left; padding: 12px;">
+                                    Date
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for scan in recent_urls %}
+
+                            <tr>
+
+                                <td style="padding: 12px; overflow-wrap: anywhere;">
+                                    {{ scan["url"] }}
+                                </td>
+
+                                <td style="padding: 12px;">
+                                    {{ scan["prediction"] }}
+                                </td>
+
+                                <td style="padding: 12px;">
+                                    {{ scan["risk_score"] }}/100
+                                </td>
+
+                                <td style="padding: 12px;">
+                                    {{ scan["created_at"] }}
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+
+                                <td colspan="4" style="text-align: center; padding: 25px; color: #94a3b8;">
+
+                                    No URL scans recorded yet.
+                                    Start by using the URL Scanner.
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="dashboard-footer">
+
+                <span>CYBER NEXA AI</span>
+
+                <span>Cybersecurity Monitoring Project</span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

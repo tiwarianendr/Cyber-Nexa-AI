@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection History | Cyber Nexa AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .history-page {
+            width: min(1150px, 94%);
+            margin: 35px auto;
+        }
+
+        .history-header {
+            margin: 30px 0;
+        }
+
+        .history-header p {
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .history-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+            font-size: 13px;
+        }
+
+        .history-table th {
+            color: #67e8f9;
+            font-weight: 600;
+        }
+
+        .history-table td {
+            color: #e2e8f0;
+        }
+
+        .history-type {
+            font-weight: bold;
+            color: #67e8f9;
+        }
+
+        .history-risk {
+            font-weight: bold;
+        }
+
+        .history-empty {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+        }
+
+        .history-score {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <main class="history-page">
+
+        <a href="{{ url_for('dashboard') }}" class="scanner-back">
+            ← Back to Dashboard
+        </a>
+
+        <header class="history-header">
+            <h1>Detection History</h1>
+            <p>Review your previously analyzed URLs and email messages.</p>
+        </header>
+
+        <section class="dashboard-panel">
+            <div class="history-table-wrap">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>URL / Email Subject</th>
+                            <th>Prediction</th>
+                            <th>Risk Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in history %}
+                        <tr>
+                            <td class="history-type">{{ item["scan_type"] }}</td>
+
+                            <td>
+                                {% if item["item"] %}
+                                {{ item["item"] }}
+                                {% else %}
+                                Untitled email
+                                {% endif %}
+                            </td>
+
+                            <td class="history-risk">
+                                {{ item["prediction"] }}
+                            </td>
+
+                            <td class="history-score">
+                                {{ item["risk_score"] }}/100
+                            </td>
+
+                            <td>{{ item["created_at"] }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="history-empty">
+                                No scans recorded yet. Use the URL Scanner or
+                                Email Scanner to create your first record.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>

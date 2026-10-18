@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cyber Nexa AI | Cybersecurity Platform</title>
+
+    <meta name="description"
+        content="Cyber Nexa AI helps analyze suspicious URLs, detect phishing indicators, and review cybersecurity risks.">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <a href="/" class="logo">
+            <span class="logo-icon">⬡</span>
+            CYBER NEXA <span class="logo-highlight">AI</span>
+        </a>
+
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="/login" class="nav-login">Login</a>
+            <a href="/signup" class="btn btn-small">Sign Up</a>
+        </nav>
+
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    CYBERSECURITY PLATFORM
+                </div>
+
+                <h1>
+                    Secure Your Digital World With
+                    <span class="gradient-text">Cyber Nexa AI</span>
+                </h1>
+
+                <p>
+                    An intelligent cybersecurity platform designed to help
+                    identify suspicious URLs, detect phishing indicators,
+                    and review potential digital threats.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="/signup" class="btn">
+                        Get Started Free ↗
+                    </a>
+
+                    <a href="#features" class="btn btn-outline">
+                        Explore Features
+                    </a>
+
+                </div>
+
+                <div class="hero-points">
+                    <span>✓ URL Risk Analysis</span>
+                    <span>✓ Phishing Detection</span>
+                    <span>✓ Security Dashboard</span>
+                </div>
+
+            </div>
+
+            <!-- Security Card -->
+            <div class="hero-visual">
+
+                <div class="glow-circle"></div>
+
+                <div class="security-card">
+
+                    <div class="card-top">
+
+                        <span class="small-label">
+                            CYBER NEXA SECURITY
+                        </span>
+
+                        <span class="live-label">
+                            <span class="status-dot"></span>
+                            PROTECTION TOOLS
+                        </span>
+
+                    </div>
+
+                    <div class="shield">
+                        <div class="shield-inner">⬡</div>
+                    </div>
+
+                    <h2>Digital Protection</h2>
+
+                    <p>
+                        Tools to help analyze potential security risks.
+                    </p>
+
+                    <div class="security-line">
+                        <span>URL Risk Analysis</span>
+                        <span class="feature-status">Scanner</span>
+                    </div>
+
+                    <div class="security-line">
+                        <span>Email Analysis</span>
+                        <span class="feature-status">Scanner</span>
+                    </div>
+
+                    <div class="security-line">
+                        <span>Detection History</span>
+                        <span class="feature-status">Dashboard</span>
+                    </div>
+
+                    <div class="card-footer">
+                        <span>CYBER NEXA AI</span>
+                        <span>SECURITY PLATFORM</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">OUR CAPABILITIES</span>
+
+                <h2>
+                    Smarter Security.
+                    <span class="gradient-text">Safer Digital Life.</span>
+                </h2>
+
+                <p>
+                    Explore the cybersecurity tools available through
+                    the Cyber Nexa AI platform.
+                </p>
+
+            </div>
+
+            <div class="features-grid">
+
+                <!-- URL Scanner -->
+                <article class="feature-card">
+
+                    <div class="feature-icon">⌕</div>
+
+                    <h3>URL Risk Scanner</h3>
+
+                    <p>
+                        Analyze website addresses for suspicious patterns
+                        and potential security risks.
+                    </p>
+
+                    <a href="/login">
+                        Explore Scanner ↗
+                    </a>
+
+                </article>
+
+                <!-- Email Scanner -->
+                <article class="feature-card">
+
+                    <div class="feature-icon">✉</div>
+
+                    <h3>Phishing Email Detector</h3>
+
+                    <p>
+                        Review email text for suspicious links, urgent
+                        requests, and possible phishing indicators.
+                    </p>
+
+                    <a href="/login">
+                        Explore Detector ↗
+                    </a>
+
+                </article>
+
+                <!-- Dashboard -->
+                <article class="feature-card">
+
+                    <div class="feature-icon">▦</div>
+
+                    <h3>Security Dashboard</h3>
+
+                    <p>
+                        Review detection history, security statistics,
+                        and previously analyzed URLs and emails.
+                    </p>
+
+                    <a href="/login">
+                        View Dashboard ↗
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+
+            <div>
+                <span class="eyebrow">ABOUT THE PROJECT</span>
+
+                <h2>
+                    Cybersecurity Made More Accessible
+                </h2>
+            </div>
+
+            <p>
+                Cyber Nexa AI is a cybersecurity project built using
+                Python, Flask, HTML, CSS, JavaScript, and SQLite.
+                It provides tools for analyzing suspicious URLs,
+                reviewing potentially fraudulent email text, and
+                viewing detection records. Results depend on the
+                detection methods and data sources implemented
+                in the application.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+
+        <a href="/" class="logo">
+            ⬡ CYBER NEXA
+            <span class="logo-highlight">AI</span>
+        </a>
+
+        <p>
+            Cybersecurity Project • Built with Python and Flask
+        </p>
+
+        <p>
+            © <span id="year"></span> Cyber Nexa AI
+        </p>
+
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <script>
+        // Automatically update the copyright year
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+
+</html>

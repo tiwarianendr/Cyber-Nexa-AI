@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Statistics | Cyber Nexa AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='statistics.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='statistics.js') }}" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+    <main class="stats-page">
+
+        <a href="{{ url_for('dashboard') }}" class="scanner-back">
+            ← Back to Dashboard
+        </a>
+
+        <header class="stats-header">
+            <h1>📊 Security Statistics</h1>
+
+            <p>
+                Overview of your recorded URL scans, email analyses
+                and potential threats.
+            </p>
+        </header>
+
+        <!-- Statistics Cards -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <div class="stat-icon">📊</div>
+                <p>Total Scans</p>
+                <h2>{{ total_scans | default(0) }}</h2>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">🔗</div>
+                <p>URL Scans</p>
+                <h2>{{ url_total | default(0) }}</h2>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">✉️</div>
+                <p>Email Analyses</p>
+                <h2>{{ email_total | default(0) }}</h2>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">🚨</div>
+                <p>Potential Threats</p>
+                <h2>{{ total_threats | default(0) }}</h2>
+            </article>
+
+        </section>
+
+        <!-- Charts -->
+
+        <section class="charts-grid">
+
+            <article class="chart-card">
+
+                <h3>Scan Distribution</h3>
+
+                <p>Compare URL scans and email analyses.</p>
+
+                <div class="chart-container">
+                    <canvas id="scanChart"></canvas>
+                </div>
+
+                <p id="scanChartError" class="chart-error" hidden>
+                    Chart load nahi hua. Internet connection check karo.
+                </p>
+
+            </article>
+
+            <article class="chart-card">
+
+                <h3>Threat Overview</h3>
+
+                <p>Potential threats compared with other recorded scans.</p>
+
+                <div class="chart-container">
+                    <canvas id="threatChart"></canvas>
+                </div>
+
+                <p id="threatChartError" class="chart-error" hidden>
+                    Chart load nahi hua. Internet connection check karo.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- Security Score -->
+
+        {% set score = security_score | default(100) | int %}
+
+        <section class="security-score-card">
+
+            <h3>🛡️ Security Score</h3>
+
+            <p>
+                A basic summary calculated from your recorded scan results.
+            </p>
+
+            <div class="score-value">
+                {{ score }}<span>/100</span>
+            </div>
+
+            <div class="score-track">
+                <div class="score-fill" id="scoreFill" data-score="{{ score }}">
+                </div>
+            </div>
+
+            <p id="scoreMessage" class="score-message">
+                Calculated from recorded scan results.
+            </p>
+
+        </section>
+
+        <!-- Disclaimer -->
+
+        <p class="stats-note">
+            <strong>Important:</strong>
+            Potential threats include scans classified as SUSPICIOUS
+            or HIGH RISK by the current rules. These are preliminary
+            estimates, not confirmed malicious detections.
+            The scanner does not guarantee that a URL or email is safe.
+            Statistics represent your recorded scans only.
+        </p>
+
+    </main>
+
+    <!-- Data passed from Flask to JavaScript -->
+
+    <script id="statistics-data" type="application/json">
+        {{ {
+            "url_total": url_total | default(0),
+            "email_total": email_total | default(0),
+            "total_scans": total_scans | default(0),
+            "total_threats": total_threats | default(0)
+        } | tojson }}
+    </script>
+
+</body>
+
+</html>
